@@ -1,7 +1,6 @@
-require('dotenv').config()
+import 'dotenv/config'
 // console.log(process.env)
-const mysql = require("mysql");
-const { serialize } = require('v8');
+import mysql from "mysql";
 const dbInfo = {
     host: process.env.DBHOST,
     port: process.env.DBPORT,
@@ -23,8 +22,39 @@ const query = (statement, params = []) => {
     });
 };
 
-const createTable = () => {
+export const insertRecord = async (string, hash) => {
+    const statement = `
+        INSERT INTO strings (string, hash) VALUES (?, ?)
+    `;
+    const params = [string, hash]; 
 
+    try {
+        const result = await query(statement, params);
+        return result.insertId;
+    } catch (error) {
+        if (error.code === 'ER_DUP_ENTRY') {
+            return null;
+        }
+        console.error('Error during database query:', error);
+        throw error;
+    }
+};
+
+const createTable = async () => {
+    const statement =`
+        CREATE TABLE strings (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            string VARCHAR(2560) NOT NULL,
+            hash VARCHAR(9999) NOT NULL
+        );
+        `
+    try {
+        const result = await query(statement);
+        return result;
+    } catch (error) {
+        console.error('Error during database query:', error);
+        throw error;
+    }
 }
 
 const doesTableExist = async (tableName) => {
@@ -35,7 +65,6 @@ const doesTableExist = async (tableName) => {
           AND TABLE_NAME = ?
     `;
 
-    // Replace 'your_database_name' with the actual database name
     const params = [process.env.DBNAME, tableName];
 
     try {
@@ -46,7 +75,3 @@ const doesTableExist = async (tableName) => {
         throw error;
     }
 };
-
-doesTableExist("string-gen").then((res) => {
-    console.log(res)
-})
