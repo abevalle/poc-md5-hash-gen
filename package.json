@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "hash-wasm": "^4.11.0",
+    "mysql": "^2.18.1"
+  },
+  "name": "poc-md5-hash-gen",
+  "description": "Flexing my javascript muscles and keeping my javascript knowledge fresh. I'm also kinda bored.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

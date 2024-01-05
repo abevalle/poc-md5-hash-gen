@@ -1,35 +1,20 @@
-// let alphDict = "abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{};':\"\\|,.<>/?`~";
-let alphDict = "abcdefghijklmnopqrstuvwxyz";
-let maxChar = (alphDict.length)-1
+const { md5 } = require("hash-wasm");
 
-const str2arr = async (str) => {
-  return alphDict.split("");
+// const alphDict = "abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{};':\"\\|,.<>/?`~";
+const alphDict = "abcdefghijklmnopqrstuvwxyz";
+
+const generateStrings = (len) => {
+  const alphArr = alphDict.split("");
+  const generate = async (prefix, n) => {
+    if (n === 0) {
+      console.log([prefix, await md5(prefix)]);
+      return;
+    }
+    alphArr.forEach(char => {
+      generate(prefix + char, n - 1);
+    });
+  };
+  generate('', len);
 };
 
-const stringGen = async (len) => {
-  let stringArr = await setUpArray(len)
-  id = 0
-  stringArr.map((char) => {
-      for(i = 0; i <= maxChar; i++) {
-       stringArr[id] = alphDict[i]
-       console.log(stringArr)
-      }
-    id++
-  })
-}
-
-const setUpArray = async (len) => {
-  if (len < 1) {console.error('Length is too short')}
-  let arr = []
-  for (let i = 1; i <= len; i++) {
-    arr.push(0)
-  }
-  return arr
-}
-
-const main = async () => {
-  
-};
-
-
-stringGen(3)
+generateStrings(3)
