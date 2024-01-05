@@ -1,30 +1,35 @@
-let alphDict =
-  "abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{};':\"\\|,.<>/?`~";
+// let alphDict = "abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{};':\"\\|,.<>/?`~";
+let alphDict = "abcdefghijklmnopqrstuvwxyz";
+let maxChar = (alphDict.length)-1
 
 const str2arr = async (str) => {
   return alphDict.split("");
 };
 
-const stringIterator = async (len) => {
-  let generatedString = [];
-  for (let i = 0; i <= len; i++) {
-    let seedStr = `${i}`;
-    let seed = seedStr.split("");
-    let strArr = [];
-    seed.map((id) => {
-      strArr.push(alphDict[id]);
-    });
-    let str = strArr.join("");
-    console.log(str);
+const stringGen = async (len) => {
+  let stringArr = await setUpArray(len)
+  id = 0
+  stringArr.map((char) => {
+      for(i = 0; i <= maxChar; i++) {
+       stringArr[id] = alphDict[i]
+       console.log(stringArr)
+      }
+    id++
+  })
+}
+
+const setUpArray = async (len) => {
+  if (len < 1) {console.error('Length is too short')}
+  let arr = []
+  for (let i = 1; i <= len; i++) {
+    arr.push(0)
   }
-};
+  return arr
+}
 
 const main = async () => {
-  let alphArr = await str2arr(alphDict);
-  let strings = await stringIterator(100);
-  console.log(alphArr);
-  console.log(strings);
+  
 };
 
-// main();
-stringIterator(9999999);
+
+stringGen(3)
