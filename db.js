@@ -40,7 +40,7 @@ export const insertRecord = async (string, hash) => {
     }
 };
 
-const createTable = async () => {
+export const createTable = async () => {
     const statement =`
         CREATE TABLE strings (
             id INT PRIMARY KEY AUTO_INCREMENT,
@@ -63,7 +63,7 @@ const createTable = async () => {
     }
 }
 
-const doesTableExist = async (tableName) => {
+export const doesTableExist = async (tableName) => {
     const statement = `
         SELECT COUNT(*)
         FROM information_schema.TABLES 
@@ -81,14 +81,3 @@ const doesTableExist = async (tableName) => {
         throw error;
     }
 };
-
-const main = async (arg = "") => {
-    let isTableSetup = await doesTableExist('strings');
-    if(isTableSetup) {
-        console.log('The database is already setup. You either already ran the setup, or have a conflicting table.')
-        process.exit()
-    }
-    createTable()
-}
-
-main()

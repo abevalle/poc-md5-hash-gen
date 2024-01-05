@@ -49,6 +49,7 @@ const generateStrings = async (len) => {
 
 
 const main = (arg) => {
-  
   generateStrings(arg)
 }
+
+console.log(process.argv[2])
