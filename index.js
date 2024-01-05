@@ -46,4 +46,9 @@ const generateStrings = async (len) => {
   console.log(`Total strings processed: ${counter}`);
 };
 
-generateStrings(3)
+
+
+const main = (arg) => {
+  
+  generateStrings(arg)
+}

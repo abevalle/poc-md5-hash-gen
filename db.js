@@ -52,7 +52,13 @@ const createTable = async () => {
         const result = await query(statement);
         return result;
     } catch (error) {
+        if (error.code === 'ER_TABLE_EXISTS_ERROR') {
+            console.log('Error Table Aleady Exists')   
+        }
         console.error('Error during database query:', error);
+        if (error.code === 'ER_TABLE_EXISTS_ERROR') {
+            return false
+        }
         throw error;
     }
 }
@@ -75,3 +81,14 @@ const doesTableExist = async (tableName) => {
         throw error;
     }
 };
+
+const main = async (arg = "") => {
+    let isTableSetup = await doesTableExist('strings');
+    if(isTableSetup) {
+        console.log('The database is already setup. You either already ran the setup, or have a conflicting table.')
+        process.exit()
+    }
+    createTable()
+}
+
+main()
