@@ -42,11 +42,13 @@ export const insertRecord = async (string, hash) => {
 
 export const createTable = async () => {
     const statement =`
-        CREATE TABLE strings (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            string VARCHAR(2560) NOT NULL,
-            hash VARCHAR(9999) NOT NULL
-        );
+        CREATE TABLE \`strings\` (
+            \`id\` int(11) NOT NULL AUTO_INCREMENT,
+            \`string\` varchar(2560) NOT NULL,
+            \`hash\` varchar(9999) NOT NULL,
+            PRIMARY KEY (\`id\`),
+            UNIQUE KEY \`string\` (\`string\`,\`hash\`) USING HASH
+        )
         `
     try {
         const result = await query(statement);
