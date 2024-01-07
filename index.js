@@ -6,12 +6,12 @@ const alphDict = "abcdefghijklmnopqrstuvwxyz";
 
 const getPermutations = (len) => {
   const dictLen = alphDict.length
-  return dictLen^len
+  return (dictLen)^len
 }
 
 const permutationRemaining = (count, len) => {
   let permutations = getPermutations(len)
-  return permutations - count
+  return permutations
 }
 
 const generateStrings = async (len) => {
@@ -28,7 +28,8 @@ const generateStrings = async (len) => {
 
               // Log progress every 100 operations, for example
               if (counter % 100 === 0) {
-                  console.log(`Processed ${counter} strings. Strings Left`);
+                  let remaing = await permutationRemaining(counter, len)
+                  console.log(`Processed ${counter} strings. Strings Left ${remaing}`);
               }
           } catch (error) {
               console.error('Error in generate:', error);
@@ -52,4 +53,4 @@ const main = (arg) => {
   generateStrings(arg)
 }
 
-console.log(process.argv[2])
+main(process.argv[2])
